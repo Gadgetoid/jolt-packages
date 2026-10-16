@@ -15,7 +15,7 @@ jpm install sacc
 | `antiword` | Read Microsoft Word documents as text |
 | `font-cozette` | Cozette 6x13 bitmap font |
 
-The package format is described in JoLT's [docs/packages.md](https://github.com/Gadgetoid/jolt/blob/main/docs/packages.md). Every push to `main` publishes to the `abi2` release, which `jpm` reads.
+The package format is described in JoLT's [docs/packages.md](https://github.com/Gadgetoid/jolt/blob/main/docs/packages.md). Every push to `main` publishes to https://gadgetoid.github.io/jolt-packages/, which `jpm` reads.
 
 ## Adding a package
 
