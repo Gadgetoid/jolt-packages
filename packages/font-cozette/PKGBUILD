@@ -1,0 +1,22 @@
+pkgname=font-cozette
+pkgver=1.30.0
+pkgrel=1
+pkgdesc="Cozette 6x13 bitmap font: jolt face cozette"
+url="https://github.com/the-moonwitch/Cozette"
+license=MIT
+arch=any
+source=("cozette-$pkgver.bdf::https://github.com/the-moonwitch/Cozette/releases/download/v.$pkgver/cozette.bdf"
+        "LICENSE-Cozette-$pkgver::https://raw.githubusercontent.com/the-moonwitch/Cozette/v.$pkgver/LICENSE")
+sha256sums=(8d740166af3a14053773ac7a8846bf288c8818a44f73ab28d4725d91b03a5639
+            5d7f0dad37ceef2dc1e9c23e85fbf18629c4eaffe9a919fa4f5b618b46766d23)
+
+build() {
+    sed 's/^FONTBOUNDINGBOX .*/FONTBOUNDINGBOX 6 13 0 -3/' "cozette-$pkgver.bdf" > cozette.bdf
+    node "$JOLT_SDK/lib/bdf2jbf.js" cozette.bdf cozette-13.jbf - cozette-13-bold.jbf
+}
+
+package() {
+    mkdir -p "$pkgdir/usr/share/fonts"
+    cp cozette-13.jbf cozette-13-bold.jbf "$pkgdir/usr/share/fonts/"
+    cp "LICENSE-Cozette-$pkgver" "$pkgdir/usr/share/fonts/LICENSE-Cozette"
+}

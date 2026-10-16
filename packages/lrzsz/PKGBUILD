@@ -1,0 +1,23 @@
+pkgname=lrzsz
+pkgver=0.12.20
+pkgrel=1
+pkgdesc="ZMODEM, YMODEM and XMODEM file transfer: sz and rz"
+url="https://ohse.de/uwe/software/lrzsz.html"
+license=GPL-2.0-or-later
+arch=jolt
+source=("https://ohse.de/uwe/releases/lrzsz-$pkgver.tar.gz")
+sha256sums=(c28b36b14bddb014d9e9c97c52459852f97bd405f89113f30bee45ed92728ff1)
+
+build() {
+    cd "lrzsz-$pkgver"
+    CFLAGS="-Os -std=gnu89" ./configure --host=arm-linux --prefix=/usr --disable-nls --disable-pubdir --disable-timesync > configure.log
+    make -j"$jobs" > make.log
+}
+
+package() {
+    mkdir -p "$pkgdir/usr/bin"
+    cp "lrzsz-$pkgver/src/lsz" "lrzsz-$pkgver/src/lrz" "$pkgdir/usr/bin/"
+    printf '#!/bin/sh\nexec lsz "$@"\n' > "$pkgdir/usr/bin/sz"
+    printf '#!/bin/sh\nexec lrz "$@"\n' > "$pkgdir/usr/bin/rz"
+    chmod 755 "$pkgdir/usr/bin/sz" "$pkgdir/usr/bin/rz"
+}

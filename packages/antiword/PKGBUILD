@@ -1,0 +1,20 @@
+pkgname=antiword
+pkgver=0.37
+pkgrel=1
+pkgdesc="Read Microsoft Word documents as text"
+url="http://www.winfield.demon.nl/"
+license=GPL-2.0-or-later
+arch=jolt
+source=("https://deb.debian.org/debian/pool/main/a/antiword/antiword_$pkgver.orig.tar.gz")
+sha256sums=(4415e79d9f4c8d282a1cffbdaffe7ec0178982b9608e79bfd18561234a43e0cc)
+
+build() {
+    cd "antiword-$pkgver"
+    make -f Makefile.Linux -j"$jobs" CC="$CC" LD="$CC" OPT=-Os antiword > make.log
+}
+
+package() {
+    mkdir -p "$pkgdir/usr/bin" "$pkgdir/usr/share/antiword"
+    cp "antiword-$pkgver/antiword" "$pkgdir/usr/bin/"
+    cp "antiword-$pkgver"/Resources/{fontnames,UTF-8.txt,8859-1.txt,8859-15.txt,cp1252.txt} "$pkgdir/usr/share/antiword/"
+}

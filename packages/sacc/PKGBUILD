@@ -1,0 +1,23 @@
+pkgname=sacc
+pkgver=1.07
+pkgrel=1
+pkgdesc="Gopher client"
+url="gopher://bitreich.org/1/scm/sacc"
+license=ISC
+arch=jolt
+source=("https://deb.debian.org/debian/pool/main/s/sacc/sacc_$pkgver.orig.tar.xz")
+sha256sums=(900dad8059ff7b47d36ce845d0d8403f3f6a317c52d3c67d8b67cc1a93e178e2)
+
+build() {
+    cd "sacc-$pkgver"
+    sed -e 's|"xclip"|"cat > /dev/clipboard"|' -e 's|"xdg-open"|"links"|' \
+        -e 's|modalplumber = 0|modalplumber = 1|' config.def.h > config.h
+    mkdir -p .git/refs/heads
+    printf '#define VERSION "%s"\n' "$pkgver" > version.h
+    make CC="$CC" UI=ti LIBS=-lncurses IO=clr IOLIBS= IOCFLAGS= SACCLDFLAGS= sacc
+}
+
+package() {
+    mkdir -p "$pkgdir/usr/bin"
+    cp "sacc-$pkgver/sacc" "$pkgdir/usr/bin/sacc"
+}
