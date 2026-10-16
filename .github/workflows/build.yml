@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
     env:
-      JOLT_RELEASE: v1.0.0-rc8
+      JOLT_RELEASE: v1.0.0
       JORNADA_LLVM_RELEASE: v3
       LLVM_NAME: velo-llvm-v3-linux-x86_64
     steps:
