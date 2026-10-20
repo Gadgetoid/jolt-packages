@@ -14,6 +14,7 @@ jpm install sacc
 | `lrzsz` | ZMODEM file transfer: `sz` and `rz`, for use with `jolt serial-shell` |
 | `antiword` | Read Microsoft Word documents as text |
 | `font-cozette` | Cozette 6x13 bitmap font |
+| `font-nordwand-mono` | Nordwand Mono TrueType font, regular and bold |
 
 The package format is described in JoLT's [docs/packages.md](https://github.com/Gadgetoid/jolt/blob/main/docs/packages.md). Every push to `main` publishes to https://gadgetoid.github.io/jolt-packages/, which `jpm` reads.
 
