@@ -1,0 +1,27 @@
+pkgname=joe
+pkgver=4.8
+pkgrel=1
+pkgdesc="Joe's Own Editor, with jstar (WordStar), jmacs, jpico and rjoe"
+url="https://joe-editor.sourceforge.io/"
+license=GPL-2.0-or-later
+arch=jolt
+source=("https://downloads.sourceforge.net/project/joe-editor/JOE%20sources/joe-$pkgver/joe-$pkgver.tar.gz"
+        launcher.c)
+sha256sums=(6995b28ee20dcdbbcb5a45a4c110642dc96d67748aea27450c74cdb4dd07cc20
+            e50aef7178e3b115b8918d822a02c1abb7f4b1599afde833280f1494cda4c17a)
+
+build() {
+    cd "joe-$pkgver"
+    sed -i.orig -e '/fclose(stdin);/d' -e 's|stdin = fopen("/dev/tty", "rb");|freopen("/dev/tty", "rb", stdin);|' joe/main.c
+    CFLAGS=-Os ./configure --host=arm-linux --prefix=/usr --sysconfdir=/etc --disable-curses --disable-termcap > configure.log
+    make -j"$jobs" > make.log
+    "$CC" -Os -o ../launcher ../launcher.c
+}
+
+package() {
+    cd "joe-$pkgver"
+    make DESTDIR="$pkgdir" install > install.log
+    find "$pkgdir/usr/bin" -type l -delete
+    for personality in jstar jmacs jpico rjoe; do cp ../launcher "$pkgdir/usr/bin/$personality"; done
+    rm -rf "$pkgdir/usr/share/man" "$pkgdir/usr/share/doc" "$pkgdir/usr/share/applications"
+}

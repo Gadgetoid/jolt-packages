@@ -1,0 +1,24 @@
+pkgname=ircii
+pkgver=20260115
+pkgrel=1
+pkgdesc="ircII, the original Unix IRC client, with TLS"
+url="https://ircii.warped.com/"
+license=BSD-3-Clause
+arch=jolt
+source=("https://ircii.warped.com/ircii-$pkgver.tar.gz")
+sha256sums=(380aabd8aa42743b51489f6b7dfeb2355bf45e36800c369e8a566c8f2fc9376e)
+
+build() {
+    cd "ircii-$pkgver"
+    CFLAGS=-Os ./configure --host=arm-linux --prefix=/usr --with-openssl="$JOLT_SDK/sysroot" > configure.log
+    make -j"$jobs" > make.log
+}
+
+package() {
+    cd "ircii-$pkgver"
+    make DESTDIR="$pkgdir" install > install.log
+    find "$pkgdir/usr/bin" -type l -delete
+    rm -f "$pkgdir/usr/bin/ircbug" "$pkgdir/usr/libexec/wserv"
+    mv "$pkgdir/usr/bin/irc-$pkgver" "$pkgdir/usr/bin/irc"
+    rm -rf "$pkgdir/usr/share/man" "$pkgdir/usr/share/irc/help"
+}

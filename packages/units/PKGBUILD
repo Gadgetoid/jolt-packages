@@ -1,0 +1,21 @@
+pkgname=units
+pkgver=2.27
+pkgrel=1
+pkgdesc="GNU units: convert between units of measurement"
+url="https://www.gnu.org/software/units/"
+license=GPL-3.0-or-later
+arch=jolt
+source=("https://ftp.gnu.org/gnu/units/units-$pkgver.tar.gz")
+sha256sums=(e1bbdb09672e7c08eee986749e7a1629eb84a6bdf41f5a2a79d6804444abbe10)
+
+build() {
+    cd "units-$pkgver"
+    CFLAGS=-Os ./configure --host=arm-linux --prefix=/usr --without-readline > configure.log
+    make -j"$jobs" units > make.log
+}
+
+package() {
+    mkdir -p "$pkgdir/usr/bin" "$pkgdir/usr/share/units"
+    cp "units-$pkgver/units" "$pkgdir/usr/bin/"
+    cp "units-$pkgver"/*.units "$pkgdir/usr/share/units/"
+}
