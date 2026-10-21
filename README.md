@@ -19,6 +19,7 @@ jpm install sacc
 | `units` | GNU units: unit conversion, `units -t '1 mile' km` |
 | `rsync` | Fast incremental file transfer, locally or over ssh |
 | `ircii` | ircII IRC client, with TLS: `irc -e irc check NICK irc.libera.chat:6697` |
+| `geomyidae` | Small Gopher server: `geomyidae -b ~/gopher -p 7070`, browse with `sacc gopher://127.0.0.1:7070` |
 
 The package format is described in JoLT's [docs/packages.md](https://github.com/Gadgetoid/jolt/blob/main/docs/packages.md). Every push to `main` publishes to https://gadgetoid.github.io/jolt-packages/, which `jpm` reads.
 

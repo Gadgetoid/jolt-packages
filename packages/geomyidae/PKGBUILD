@@ -1,0 +1,20 @@
+pkgname=geomyidae
+pkgver=0.99
+pkgrel=1
+pkgdesc="Small Gopher server: geomyidae -b ~/gopher -p 7070"
+url="gopher://bitreich.org/1/scm/geomyidae"
+license=MIT
+arch=jolt
+source=("gopher://bitreich.org/9/releases/geomyidae/geomyidae-v$pkgver.tar.gz")
+sha256sums=(427014aafca2f9bd789088ea9eb798e9a74597ada09518ae5fd42255a991eb3c)
+
+build() {
+    cd "geomyidae-v$pkgver"
+    sed -i.orig -e 's/inetf = AF_UNSPEC/inetf = AF_INET/' -e 's/if (recv(sock, &byte0, 1, MSG_PEEK) < 1)/byte0 = 0; if (0)/' main.c
+    make CC="$CC" GEOM_CFLAGS="-D_DEFAULT_SOURCE -I. -Os" GEOM_LDFLAGS= > make.log
+}
+
+package() {
+    mkdir -p "$pkgdir/usr/bin"
+    cp "geomyidae-v$pkgver/geomyidae" "$pkgdir/usr/bin/"
+}
