@@ -1,21 +1,20 @@
 pkgname=dungeonbash
-pkgver=1.7
+pkgver=1.8
 pkgrel=1
-pkgdesc="Martin's Dungeon Bash: a simple roguelike game"
-url="http://www.chiark.greenend.org.uk/%7Empread/dungeonbash/"
+pkgdesc="Squished Dungeon Bash: a simple roguelike game"
+url="https://github.com/Jonson26/squished-dungeonbash"
 license=BSD-2-Clause
 arch=jolt
-source=("http://www.chiark.greenend.org.uk/%7Empread/dungeonbash/archive-$pkgver/dungeonbash-$pkgver.tar.gz")
-sha256sums=(790bde04ff869ba2817ad1f07d062d75f7f15af4a2c99669dd60a4b98fdf1380)
+source=("https://github.com/Jonson26/squished-dungeonbash/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=(ad1b41c7b658fd970588d2334a355bdf25a58f123efeca61811e0969377e326f)
 
 build() {
-    cd "dungeonbash-$pkgver"
-    sed -i '15c\CFLAGS=-c -g -Wall -Wstrict-prototypes -Wwrite-strings -Wmissing-prototypes -Wredundant-decls -Wunreachable-code -DMAJVERS=$(MAJVERS) -DMINVERS=$(MINVERS)' Makefile
+    cd "squished-dungeonbash-$pkgver"
     make > make.log
 }
 
 package() {
     mkdir -p "$pkgdir/usr/bin" "$pkgdir/usr/share/dungeonbash"
-    cp "dungeonbash-$pkgver/dungeonbash" "$pkgdir/usr/bin/"
-    cp -ar "dungeonbash-$pkgver/spoilers" "$pkgdir/usr/share/dungeonbash/"
+    cp "squished-dungeonbash-$pkgver/dungeonbash" "$pkgdir/usr/bin/"
+    cp -ar "squished-dungeonbash-$pkgver/spoilers" "$pkgdir/usr/share/dungeonbash/"
 }
