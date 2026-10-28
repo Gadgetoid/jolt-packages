@@ -1,12 +1,12 @@
 pkgname=dungeonbash
-pkgver=1.8
+pkgver=1.8.1
 pkgrel=1
 pkgdesc="Squished Dungeon Bash: a simple roguelike game"
 url="https://github.com/Jonson26/squished-dungeonbash"
 license=BSD-2-Clause
 arch=jolt
 source=("https://github.com/Jonson26/squished-dungeonbash/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=(ad1b41c7b658fd970588d2334a355bdf25a58f123efeca61811e0969377e326f)
+sha256sums=(9043616b55910e81d70e0602d8a186c3494e8955c0f0be450659e4af8dc9eb5e)
 
 build() {
     cd "squished-dungeonbash-$pkgver"
