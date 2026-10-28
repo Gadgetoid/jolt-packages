@@ -1,0 +1,21 @@
+pkgname=dungeonbash
+pkgver=1.7
+pkgrel=1
+pkgdesc="Martin's Dungeon Bash: a simple roguelike game"
+url="http://www.chiark.greenend.org.uk/%7Empread/dungeonbash/"
+license=BSD-2-Clause
+arch=jolt
+source=("http://www.chiark.greenend.org.uk/%7Empread/dungeonbash/archive-$pkgver/dungeonbash-$pkgver.tar.gz")
+sha256sums=(790bde04ff869ba2817ad1f07d062d75f7f15af4a2c99669dd60a4b98fdf1380)
+
+build() {
+    cd "dungeonbash-$pkgver"
+    sed -i '15c\CFLAGS=-c -g -Wall -Wstrict-prototypes -Wwrite-strings -Wmissing-prototypes -Wredundant-decls -Wunreachable-code -DMAJVERS=$(MAJVERS) -DMINVERS=$(MINVERS)' Makefile
+    make > make.log
+}
+
+package() {
+    mkdir -p "$pkgdir/usr/bin" "$pkgdir/usr/share/dungeonbash"
+    cp "dungeonbash-$pkgver/dungeonbash" "$pkgdir/usr/bin/"
+    cp -ar "dungeonbash-$pkgver/spoilers" "$pkgdir/usr/share/dungeonbash/"
+}
